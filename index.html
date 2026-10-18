@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>엠폰투 상권 분석 보고서</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;800&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6efe3;--ink:#16110c;--mut:#6f6354;--card:#fffaf1;--line:#16110c1f;--acc:#ff5a1f;--gold:#f2b134;--g:#1f7a4d;--r:#c0392b}
+@media(prefers-color-scheme:dark){:root{--bg:#120e0a;--ink:#f6efe3;--mut:#a89a86;--card:#1d1711;--line:#f6efe31f}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 "Noto Sans KR",-apple-system,sans-serif}
+.w{max-width:1080px;margin:0 auto;padding:0 20px}
+nav{position:fixed;top:0;left:0;right:0;z-index:9;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .w{display:flex;gap:6px;align-items:center;height:54px;overflow-x:auto;white-space:nowrap}
+nav b{font:800 15px "Bricolage Grotesque";margin-right:auto}
+nav a{color:var(--ink);text-decoration:none;font-size:13px;padding:6px 12px;border-radius:99px}
+nav a:hover{background:var(--ink);color:var(--bg)}
+nav em{font-style:normal;color:var(--acc);margin-right:4px;font-weight:700}
+.hero{padding:130px 0 60px;position:relative;overflow:hidden}
+.hero h1{font:800 clamp(44px,10vw,128px)/.95 "Bricolage Grotesque","Noto Sans KR";letter-spacing:-.04em;margin:18px 0}
+.hero h1 span{color:var(--acc)}
+.pill{display:inline-block;border:1.5px solid var(--ink);border-radius:99px;padding:4px 14px;font-size:13px;font-weight:700}
+.mission{background:var(--ink);color:var(--bg);border-radius:22px;padding:26px 30px;margin-top:34px;display:grid;gap:8px}
+.mission small{letter-spacing:.2em;color:var(--gold);font-weight:700}
+.mission b{font-size:clamp(20px,3vw,30px);line-height:1.3}
+.marq{border-block:1.5px solid var(--ink);overflow:hidden;white-space:nowrap;padding:12px 0;margin-top:40px;font:800 28px "Bricolage Grotesque"}
+.marq div{display:inline-block;animation:m 28s linear infinite}
+@keyframes m{to{transform:translateX(-50%)}}
+section{padding:80px 0;border-top:1.5px solid var(--line)}
+.num{font:800 14px "Bricolage Grotesque";color:var(--acc);letter-spacing:.15em}
+h2{font:800 clamp(30px,5vw,56px)/1.05 "Bricolage Grotesque","Noto Sans KR";letter-spacing:-.03em;margin:8px 0 18px}
+h3{margin:0 0 6px;font-size:19px}
+.mut{color:var(--mut);font-size:14px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:18px}
+.card{background:var(--card);border:1.5px solid var(--line);border-radius:20px;padding:22px}
+.rise{opacity:0;transform:translateY(26px);transition:.8s cubic-bezier(.2,.7,.2,1)}
+.rise.in{opacity:1;transform:none}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0}
+.tabs a{border:1.5px solid var(--ink);border-radius:99px;padding:6px 16px;font-weight:700;font-size:14px;color:var(--ink);text-decoration:none}
+.tabs a:hover{background:var(--acc);border-color:var(--acc);color:#fff}
+.cands{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.cands .card .s{font:800 54px/1 "Bricolage Grotesque"}
+.leg{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;margin:10px 0}
+.leg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.row{display:grid;grid-template-columns:160px 1fr;gap:14px;padding:16px 0;border-bottom:1px solid var(--line);align-items:center}
+.row .lb b{display:block;font-size:15px}.row .lb span{font-size:12px;color:var(--mut)}
+.bars div{display:flex;align-items:center;gap:10px;margin:4px 0;font-size:13px}
+.bars i{display:block;height:14px;border-radius:7px;width:0;transition:width 1.2s cubic-bezier(.2,.7,.2,1)}
+.bars em{font-style:normal;font-weight:700;white-space:nowrap}
+@media(max-width:640px){.row{grid-template-columns:1fr}}
+.c1{background:var(--acc)}.c2{background:var(--gold)}.c3{background:#9b8f7e}
+/* winner stage */
+.stage{background:var(--ink);color:var(--bg);border-radius:28px;padding:40px 24px;text-align:center;position:relative;overflow:hidden;min-height:430px}
+.stage .t{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:24px}
+.chip{border:1.5px solid #f6efe344;border-radius:99px;padding:8px 18px;transition:all 1s;font-weight:700}
+.stage.go .chip.out{opacity:.25;transform:scale(.8)}
+.stage.go .chip.win{background:var(--acc);border-color:var(--acc);color:#fff;transform:scale(1.35);box-shadow:0 0 0 0 #ff5a1f88;animation:pl 1.8s 1s infinite}
+@keyframes pl{70%{box-shadow:0 0 0 30px #ff5a1f00}100%{box-shadow:0 0 0 0 #ff5a1f00}}
+.ring{width:210px;height:210px;margin:20px auto 0;position:relative}
+.ring svg{transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:14;stroke-linecap:round}
+.ring .bg{stroke:#f6efe322}.ring .fg{stroke:var(--gold);stroke-dasharray:565;stroke-dashoffset:565;transition:stroke-dashoffset 2.2s cubic-bezier(.2,.7,.2,1)}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font:800 56px "Bricolage Grotesque"}
+.stage h3{font:800 clamp(28px,5vw,52px)/1.1 "Bricolage Grotesque","Noto Sans KR";margin:18px 0 4px}
+.spark{position:absolute;border-radius:50%;background:var(--gold);width:8px;height:8px;opacity:0}
+.stage.go .spark{animation:sp 3s ease-out infinite}
+@keyframes sp{0%{opacity:1;transform:translate(0,0)}100%{opacity:0;transform:translate(var(--x),var(--y))}}
+table{width:100%;border-collapse:collapse;font-size:14px;background:var(--card);border-radius:14px;overflow:hidden}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left}th{background:#ff5a1f22}
+.why{counter-reset:w;display:grid;gap:12px;margin-top:16px}
+.why div{counter-increment:w;background:var(--card);border:1.5px solid var(--line);border-radius:18px;padding:18px 20px 18px 70px;position:relative}
+.why div:before{content:"0" counter(w);position:absolute;left:20px;top:14px;font:800 30px "Bricolage Grotesque";color:var(--acc)}
+.note{border-left:5px solid var(--acc);background:#ff5a1f14;padding:12px 16px;border-radius:8px;font-size:14px;margin-top:16px}
+/* concept */
+.clockwrap{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));align-items:center}
+.clock{width:min(320px,80vw);margin:auto}
+.big{font:800 clamp(52px,12vw,120px)/.95 "Bricolage Grotesque";letter-spacing:-.04em}
+.big span{color:var(--acc)}
+.cd{font:700 22px "Bricolage Grotesque";background:var(--ink);color:var(--bg);display:inline-block;border-radius:14px;padding:8px 18px}
+.floor{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+.floor>div{border-radius:20px;padding:22px;min-height:150px}
+.f1{background:var(--gold);color:#16110c}.f2{background:var(--ink);color:var(--bg)}
+@media(max-width:640px){.floor{grid-template-columns:1fr}}
+.menu b.p{font:800 30px "Bricolage Grotesque"}
+footer{padding:40px 0 60px;border-top:1.5px solid var(--line)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rise{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<nav><div class="w"><b>em ponto · REPORT</b>
+<a href="#mission"><em>00</em>미션</a><a href="#result"><em>01</em>상권 선정</a><a href="#concept"><em>02</em>매장 컨셉</a><a href="#risk"><em>03</em>한계</a></div></nav>
+
+<header class="hero" id="mission"><div class="w">
+<span class="pill">SEOUL · 에그타르트 전문점 · 3개년 출점</span>
+<h1>정각에<br>들어갈 <span>상권</span></h1>
+<p style="max-width:560px;font-size:18px">서울시 열린데이터 광장 실측으로 후보 281곳을 판정했습니다. 선행 지표는 강하고, 동행 지표는 막 돌아섰고, 후행 지표는 아직 낮은 곳을 찾았습니다.</p>
+<div class="mission"><small>YOUR MISSION</small><b>"경쟁사보다 먼저, 뜨기 직전의 서울 상권에 엠폰투 1호점을 낸다."</b><span class="mut" style="color:#f6efe3aa">최종 선정: 문래예술촌(문래창작촌) · 판정식 점수 10.0 / 10 (2년 비교 기준)</span></div>
+</div>
+<div class="marq"><div>EM PONTO · 매 정각 갓 구운 에그타르트 · EM PONTO · 매 정각 갓 구운 에그타르트 · EM PONTO · 매 정각 갓 구운 에그타르트 · EM PONTO · 매 정각 갓 구운 에그타르트 · </div></div>
+</header>
+
+<section id="result"><div class="w">
+<span class="num">01 · RESULT</span>
+<h2>최적 상권 선정 결과</h2>
+<div class="tabs"><a href="#cmp">비교</a><a href="#win">최종 선정</a><a href="#why">핵심 사유</a></div>
+<div class="cands">
+<div class="card rise"><span class="pill">후보 1</span><h3>문래예술촌(문래창작촌)</h3><div class="s" data-n="10.0">0</div><span class="mut">영등포구 · 골목상권 · 판정식 점수</span></div>
+<div class="card rise"><span class="pill">후보 2</span><h3>충무로 영화인의거리</h3><div class="s" data-n="8.94">0</div><span class="mut">중구 · 발달상권 · 판정식 점수</span></div>
+<div class="card rise"><span class="pill">후보 3</span><h3>서교동(홍대)</h3><div class="s" data-n="7.58">0</div><span class="mut">마포구 · 발달상권 · 2년 비교 (3년 비교 8.92)</span></div>
+</div>
+
+<h3 id="cmp" style="margin-top:56px;font-size:26px">지표별 데이터 비교</h3>
+<p class="mut">막대 길이는 판정식 환산 점수(0~1)이고 숫자는 실측값입니다. 비교 기간은 2024Q2 → 2026Q2. 선행(a·b·c) / 동행(d) / 후행(e·f).</p>
+<div class="leg"><span><i class="c1"></i>문래</span><span><i class="c2"></i>충무로 영화인의거리</span><span><i class="c3"></i>서교동(홍대)</span></div>
+<div id="rows"></div>
+<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
+<div class="card"><h3>레이더: 6지표 균형</h3><svg id="radar" viewBox="-130 -130 260 260" style="width:100%;max-width:340px;display:block;margin:auto"></svg></div>
+<div class="card"><h3>비교 기간별 점수</h3>
+<table><tr><th>상권</th><th>1년</th><th>2년</th><th>3년</th><th>평균</th></tr>
+<tr><td>문래</td><td>8.68</td><td><b>10.0</b></td><td>7.93</td><td>8.87</td></tr>
+<tr><td>충무로</td><td>8.73</td><td>8.94</td><td>8.94</td><td>8.87</td></tr>
+<tr><td>홍대</td><td>6.93</td><td>7.58</td><td>8.92</td><td>7.81</td></tr></table>
+<p class="mut">합격선은 사용자 지시로 9.5에서 8.5로 조정했습니다. 문래의 10.0은 2년 비교 값이며 다른 기간에서는 충무로와 사실상 동률입니다.</p></div>
+</div>
+
+<h3 id="win" style="margin-top:56px;font-size:26px">최종 선정</h3>
+<div class="stage" id="stage">
+<span class="pill" style="border-color:#f6efe366">FINAL PICK</span>
+<div class="t"><span class="chip out">충무로 영화인의거리 8.94</span><span class="chip win">문래예술촌 10.0</span><span class="chip out">서교동(홍대) 7.58</span></div>
+<div class="ring"><svg viewBox="0 0 200 200" width="210" height="210"><circle class="bg" cx="100" cy="100" r="90"/><circle class="fg" id="fg" cx="100" cy="100" r="90"/></svg><b id="cnt">0.0</b></div>
+<h3>문래예술촌(문래창작촌)</h3>
+<div style="color:#f6efe3aa">선행 강함 · 동행 전환 시작 · 후행 낮음</div>
+<span class="spark" style="left:30%;top:60%;--x:-60px;--y:-90px"></span><span class="spark" style="left:70%;top:55%;--x:70px;--y:-80px;animation-delay:.6s"></span><span class="spark" style="left:50%;top:40%;--x:0;--y:-110px;animation-delay:1.2s"></span><span class="spark" style="left:20%;top:30%;--x:-80px;--y:-40px;animation-delay:1.8s"></span><span class="spark" style="left:82%;top:35%;--x:80px;--y:-50px;animation-delay:2.2s"></span>
+</div>
+
+<h3 id="why" style="margin-top:56px;font-size:26px">핵심 사유 요약</h3>
+<div class="why">
+<div class="rise"><b>선행: 사람과 점포가 같이 늘고 있다.</b> 디저트·카페 점포 43→74곳(+25%, 2021Q2→2026Q2 매년 증가), 20~30대 유동인구 +14%. 경쟁 공백은 제과점 비중 3.4%로 낮다.</div>
+<div class="rise"><b>동행: 주말·저녁 소비가 막 올라오기 시작했다.</b> 디저트·카페 매출의 주말+저녁 비중이 +5.7%p 상승했지만 아직 포화 구간은 아니다.</div>
+<div class="rise"><b>후행: 아직 과열 전이다.</b> 프랜차이즈 비중 5%(2021년 7%에서 감소), 매출 증가 +1%로 과열 신호가 없다. 임대료는 직접 데이터가 없어 현장 확인이 필요하다.</div>
+<div class="rise"><b>비교우위: 3곳 중 6개 지표를 모두 충족한 유일한 곳이다.</b> 충무로는 프랜차이즈 17%, 홍대는 이미 성숙해 매출 +33%로 후행이 먼저 올라와 있다.</div>
+</div>
+</div></section>
+
+<section id="concept"><div class="w">
+<span class="num">02 · CONCEPT</span>
+<h2>엠폰투 <span style="color:var(--acc)">em ponto</span></h2>
+<p style="font-size:18px;max-width:640px">포르투갈어로 "정각"이라는 뜻입니다. 매시 정각에 구워 내는 에그타르트로, 기다림을 이벤트로 바꿉니다.</p>
+<div class="clockwrap">
+<div class="clock"><svg viewBox="-110 -110 220 220"><circle r="100" fill="var(--card)" stroke="var(--ink)" stroke-width="4"/>
+<g id="ticks"></g><line id="mh" y2="-72" stroke="var(--ink)" stroke-width="5" stroke-linecap="round"/><line id="hh" y2="-48" stroke="var(--acc)" stroke-width="7" stroke-linecap="round"/><circle r="7" fill="var(--ink)"/></svg></div>
+<div><div class="big">:00<span>.</span></div><p>다음 정각까지</p><div class="cd" id="cd">--:--</div><p class="mut">매시 00분, 갓 나온 타르트가 진열대에 오릅니다.</p></div>
+</div>
+
+<div class="grid">
+<div class="card rise"><span class="num">TARGET</span><h3>타겟 고객</h3><p><b>20대 확산층</b> 신메뉴를 먼저 찾아 먹고 인증하는 층. 정각 한정 필링이 콘텐츠가 됩니다.<br><b>30대 재방문층</b> 클래식 세트를 일상처럼 반복 구매하는 층.</p></div>
+<div class="card rise menu"><span class="num">MENU</span><h3>메뉴 구성</h3><p><b>기본 세트</b> 클래식 에그타르트 1개 + 100ml 아이스 아메리카노<br><b>정각 한정</b> 시간대마다 수량 한정 필링(예: 피스타치오 등)</p></div>
+<div class="card rise"><span class="num">POINT</span><h3>차별성</h3><p>정각마다 구워 내는 <b>'시간'이 상품</b>인 에그타르트. 줄 서는 이유가 생기고, 매시 새로 구워 품질 편차가 없습니다.</p></div>
+</div>
+
+<div class="floor" style="margin-top:14px">
+<div class="f1 rise"><span class="num" style="color:#16110c">1F</span><h3>포장 전문</h3><p>좌석 없이 정각 타이밍에 맞춘 빠른 픽업 동선. 2호선 문래역 방향 이동객과 주변 직장인을 겨냥합니다.</p></div>
+<div class="f2 rise"><span class="num">2F</span><h3>올 스탠딩 바</h3><p>의자 없이 서서 먹는 바. 체류를 짧게 가져가 회전율을 높이고, "정각에 맞춰 올라가는 곳"이라는 의식을 만듭니다.</p></div>
+</div>
+
+<h3 style="margin-top:50px;font-size:26px">상권 적합성: 왜 문래인가</h3>
+<table>
+<tr><th>컨셉 요소</th><th>필요한 상권 조건</th><th>문래의 실측 근거</th></tr>
+<tr><td>20대 확산층</td><td>20~30대 유동이 늘고 사진·인증 소비가 있는 곳</td><td>20~30대 유동인구 +14%, 철공소 골목 풍경이 콘텐츠 배경이 됨</td></tr>
+<tr><td>정각 한정 필링</td><td>저녁·주말에 디저트 소비가 올라오는 곳</td><td>주말+저녁 매출 비중 +5.7%p, 저녁(17~24시) 비중이 높음</td></tr>
+<tr><td>30대 재방문</td><td>개인 점포가 많아 단골 형성이 쉬운 곳</td><td>프랜차이즈 비중 5%, 디저트·카페 점포 매년 증가(43→74)</td></tr>
+<tr><td>전문점 선점</td><td>제과점 경쟁이 약한 곳</td><td>외식 점포 중 제과점 3.4% (에그타르트 단독 데이터는 없음)</td></tr>
+<tr><td>1F 포장 + 2F 스탠딩</td><td>작은 면적으로도 운영 가능한 입지</td><td>좁은 필지가 많은 골목 상권 구조(현장 확인 필요)</td></tr>
+</table>
+<p class="note">정각 이벤트가 실제 매출을 올리는지는 이 데이터로 확인되지 않은 가설입니다. 1호점 오픈 후 정각 시간대별 판매량으로 검증하세요.</p>
+</div></section>
+
+<section id="risk"><div class="w">
+<span class="num">03 · LIMITS</span>
+<h2>이 결과가 틀릴 수 있는 이유</h2>
+<div class="grid">
+<div class="card"><h3>과거 검증 결과</h3><p>같은 판정식을 2023Q2에 적용해 이후 3년과 비교하자 <b>예측력이 거의 없었습니다</b>(상위 10%가 평균을 넘은 비율 55%, 순위상관 −0.01). 성수동카페거리는 놓쳤습니다.</p></div>
+<div class="card"><h3>대리지표</h3><p>검색/SNS, 임대료, 에그타르트 단독 업종은 이 API에 없어 각각 점포 증가율, 매출 과열 여부, 제과점 비중으로 대체했습니다.</p></div>
+<div class="card"><h3>다음 단계</h3><p>한국부동산원 임대료와 네이버 데이터랩 검색량을 붙여 재검증하고, 문래·충무로를 현장 실사한 뒤 소형으로 1호점을 시작하세요.</p></div>
+</div>
+</div></section>
+
+<footer><div class="w mut">데이터: 서울 열린데이터광장 상권분석서비스(추정매출·추정유동인구·점포), 2024Q2 대비 2026Q2. 투자·계약 자문이 아닙니다.</div></footer>
+
+<script>
+const names=["문래","충무로 영화인의거리","서교동(홍대)"];
+const R=[
+ {k:"a",t:"디저트·카페 점포 증가",s:"선행 · 2년",v:["+25%","+50%","+2%"],n:[1,1,.17]},
+ {k:"b",t:"20~30대 유동인구 증가",s:"선행 · 2년",v:["+14%","+23%","+4%"],n:[1,1,.58]},
+ {k:"c",t:"경쟁공백 (제과점 비중)",s:"선행 · 낮을수록 좋음",v:["3.4%","3.4%","4.3%"],n:[1,1,1]},
+ {k:"d",t:"주말·저녁 매출 비중 변화",s:"동행",v:["+5.7%p","+10.6%p","+3.8%p"],n:[1,1,.96]},
+ {k:"e",t:"과열도 (매출 증가, 임대료 대리)",s:"후행 · 건강 밴드가 좋음",v:["+1%","+1%","+33%"],n:[1,1,.84]},
+ {k:"f",t:"프랜차이즈 비중",s:"후행 · 낮을수록 좋음",v:["5%","17%","11%"],n:[1,.51,.93]}];
+const rows=document.getElementById('rows');
+rows.innerHTML=R.map(r=>`<div class="row rise"><div class="lb"><b>${r.k}. ${r.t}</b><span>${r.s}</span></div><div class="bars">${r.n.map((n,i)=>`<div><i class="c${i+1}" data-w="${Math.max(n*100,4)}"></i><em>${r.v[i]}</em></div>`).join('')}</div></div>`).join('');
+// radar
+const rd=document.getElementById('radar'),ang=i=>-Math.PI/2+i*2*Math.PI/6,P=(i,v)=>[Math.cos(ang(i))*v*100,Math.sin(ang(i))*v*100];
+let h='';[.33,.66,1].forEach(l=>h+=`<polygon points="${R.map((_,i)=>P(i,l).join(',')).join(' ')}" fill="none" stroke="currentColor" opacity=".18"/>`);
+R.forEach((r,i)=>{const [x,y]=P(i,1.18);h+=`<text x="${x}" y="${y}" font-size="11" text-anchor="middle" fill="currentColor">${r.k}</text>`});
+const cols=["#ff5a1f","#f2b134","#9b8f7e"];
+[2,1,0].forEach(j=>h+=`<polygon points="${R.map((r,i)=>P(i,r.n[j]).join(',')).join(' ')}" fill="${cols[j]}" fill-opacity="${j==0?.35:.12}" stroke="${cols[j]}" stroke-width="2.5"/>`);
+rd.innerHTML=h;
+// reveal
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const t=e.target;t.classList.add('in');
+ t.querySelectorAll('[data-w]').forEach(b=>b.style.width=b.dataset.w*.62+'%');
+ const s=t.querySelector('.s[data-n]');if(s)count(s,+s.dataset.n);io.unobserve(t)}),{threshold:.25});
+document.querySelectorAll('.rise').forEach(e=>io.observe(e));
+function count(el,to,fn){const t0=performance.now();(function f(t){const p=Math.min(1,(t-t0)/1600);el.textContent=(to*(1-Math.pow(1-p,3))).toFixed(to%1?2:1);if(p<1)requestAnimationFrame(f);else el.textContent=to%1?to.toFixed(2):to.toFixed(1)})(t0)}
+// stage
+const st=document.getElementById('stage');
+new IntersectionObserver((es,o)=>{if(es[0].isIntersecting){st.classList.add('go');document.getElementById('fg').style.strokeDashoffset=565*(1-1);count(document.getElementById('cnt'),10);o.disconnect()}},{threshold:.5}).observe(st);
+// clock
+const tk=document.getElementById('ticks');let tt='';for(let i=0;i<12;i++){tt+=`<line y1="-90" y2="-80" stroke="currentColor" stroke-width="3" transform="rotate(${i*30})"/>`}tk.innerHTML=tt;
+function tick(){const d=new Date(),m=d.getMinutes(),s=d.getSeconds();
+ document.getElementById('mh').setAttribute('transform',`rotate(${m*6+s*.1})`);
+ document.getElementById('hh').setAttribute('transform',`rotate(${(d.getHours()%12)*30+m*.5})`);
+ const rem=3600-(m*60+s);document.getElementById('cd').textContent=String(Math.floor(rem/60)).padStart(2,'0')+':'+String(rem%60).padStart(2,'0')}
+tick();setInterval(tick,1000);
+</script>
+</body>
+</html>
