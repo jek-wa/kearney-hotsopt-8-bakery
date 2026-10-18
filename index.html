@@ -95,6 +95,15 @@ footer{padding:40px 0 60px;border-top:1.5px solid var(--line)}
 .how{background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:14px 18px;font-size:14px;margin:14px 0}
 .how b{color:var(--acc)}
 .det td:first-child{font-weight:700}.hit{color:var(--g);font-weight:700}.miss{color:var(--r);font-weight:700}
+.seg{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.seg button{font:700 14px "Noto Sans KR",sans-serif;background:var(--card);color:var(--ink);border:1.5px solid var(--ink);border-radius:99px;padding:7px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+.seg button i{width:11px;height:11px;border-radius:50%;display:inline-block}
+.seg button.on{background:var(--ink);color:var(--bg)}
+.radwrap{display:grid;gap:14px;grid-template-columns:minmax(0,1.7fr) minmax(240px,1fr);align-items:start}
+@media(max-width:800px){.radwrap{grid-template-columns:1fr}}
+.lyr{transition:opacity .5s}
+.chipr{display:grid;grid-template-columns:14px 1fr;gap:2px 10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.chipr i{width:14px;height:14px;border-radius:50%;grid-row:span 2}.chipr span{font-size:13px;color:var(--mut);grid-column:2}
 </style>
 </head>
 <body>
@@ -121,13 +130,18 @@ footer{padding:40px 0 60px;border-top:1.5px solid var(--line)}
 <div class="card rise"><span class="pill">후보 3 · 281곳 중 3위</span><h3>충무로 영화인의거리</h3><div class="s" data-n="80.5">0</div><span class="mut">중구 · 발달상권 · 진입적기 지수 (2년 비교)</span></div>
 </div>
 
-<h3 id="cmp" style="margin-top:56px;font-size:26px">지표별 데이터 비교</h3>
-<div class="how"><b>이렇게 읽으세요.</b> 막대는 <b>후보 281곳 중 얼마나 유리한 위치인가</b>를 뜻합니다. 막대가 길수록 진입에 유리하고, 점선(가운데)은 서울 후보의 중간 수준입니다. 점선을 넘으면 중간보다 좋은 것이고 끝에 가까울수록 상위권입니다. 오른쪽 숫자는 실제 측정값과 "상위 몇 %"입니다. 경쟁공백과 프랜차이즈 비중은 값이 낮을수록 유리해서 막대를 뒤집어 그렸습니다.</div>
-<div class="leg"><span><i class="c1"></i>문래</span><span><i class="c2"></i>한강로동 땡땡거리</span><span><i class="c3"></i>충무로 영화인의거리</span></div>
-<div class="axis"><span>← 불리 (하위)</span><span>중간</span><span>유리 (상위) →</span></div>
-<div id="rows"></div>
+<h3 id="cmp" style="margin-top:56px;font-size:26px">6지표 균형 비교</h3>
+<div class="how"><b>이렇게 읽으세요.</b> 중심에서 <b>바깥으로 갈수록 유리</b>합니다. 초록색 바깥 띠가 "281곳 중 상위 25%" 구간이고, 점선 육각형이 서울 후보의 중간 수준입니다. 도형이 초록 띠까지 넓게 뻗을수록 진입 조건이 좋은 상권입니다. 경쟁공백과 프랜차이즈 비중은 값이 낮을수록 유리해서 방향을 뒤집어 그렸습니다.</div>
+<div class="seg" id="seg">
+<button data-k="all" class="on">전체 비교</button><button data-k="0"><i class="c1"></i>문래</button><button data-k="1"><i class="c2"></i>한강로동 땡땡거리</button><button data-k="2"><i class="c3"></i>충무로 영화인의거리</button>
+</div>
+<div class="radwrap">
+<div class="card" style="padding:10px"><svg id="radar" viewBox="-360 -290 720 590" role="img" aria-label="6지표 균형 방사형 그래프" style="width:100%;display:block"></svg></div>
+<div class="card" id="rinfo"></div>
+</div>
 <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
-<div class="card"><h3>6지표 균형 (레이더)</h3><svg id="radar" viewBox="-175 -150 350 300" style="width:100%;max-width:420px;display:block;margin:auto"></svg><p class="mut" style="margin-bottom:0">바깥쪽일수록 유리합니다. 바깥 테두리가 후보 281곳 중 최상위, 점선 육각형이 중간 수준입니다.</p></div>
+<div class="card"><h3>실측값</h3>
+<table id="vals"></table></div>
 <div class="card"><h3>비교 기간을 바꿔도 유지되나</h3>
 <table><tr><th>상권</th><th>1년</th><th>2년</th><th>3년</th></tr>
 <tr><td>문래</td><td>82.6 (1위)</td><td><b>84.5 (1위)</b></td><td>77.3 (3위)</td></tr>
@@ -224,20 +238,39 @@ footer{padding:40px 0 60px;border-top:1.5px solid var(--line)}
 
 <script>
 const R=[
- {k:"점포 증가",t:"디저트·카페 점포 증가",s:"선행 · 2년 · 중간값 -1.6%",v:["+25%","+2%","+50%"],p:[.97,.69,1.0]},
- {k:"20~30대 유동",t:"20~30대 유동인구 증가",s:"선행 · 2년 · 중간값 -4.2%",v:["+14%","+47%","+23%"],p:[.88,.99,.95]},
- {k:"경쟁 공백",t:"경쟁공백 (제과점 비중)",s:"선행 · 낮을수록 유리 · 중간값 4.1%",v:["3.4%","1.7%","3.4%"],p:[.60,.88,.63]},
- {k:"주말·저녁 매출",t:"주말·저녁 매출 비중 변화",s:"동행 · 중간값 -0.1%p",v:["+5.7%p","+6.0%p","+10.6%p"],p:[.88,.88,.96]},
- {k:"과열도 안전",t:"과열도 (매출 증가, 임대료 대리)",s:"후행 · 완만한 성장이 유리 · 중간값 -1.5%",v:["+1%","-31% (하락 주의)","+1%"],p:[.77,.49,.76]},
- {k:"프랜차이즈 낮음",t:"프랜차이즈 비중",s:"후행 · 낮을수록 유리 · 중간값 21.8%",v:["5%","3%","17%"],p:[.95,.98,.62]}];
-const rows=document.getElementById('rows');
-rows.innerHTML=R.map(r=>`<div class="row rise"><div class="lb"><b>${r.t}</b><span>${r.s}</span></div><div class="bars">${r.p.map((p,i)=>`<div><span class="pctw"><i class="c${i+1}" data-w="${p*100}"></i></span><em><b>${r.v[i]}</b>상위 ${Math.max(1,Math.round((1-p)*100))}%</em></div>`).join('')}</div></div>`).join('');
-const rd=document.getElementById('radar'),ang=i=>-Math.PI/2+i*2*Math.PI/6,P=(i,v)=>[Math.cos(ang(i))*v*100,Math.sin(ang(i))*v*100];
-let h='';[.5,1].forEach((l,q)=>h+=`<polygon points="${R.map((_,i)=>P(i,l).join(',')).join(' ')}" fill="none" stroke="currentColor" opacity="${q?'.25':'.45'}" ${q?'':'stroke-dasharray="4 4"'}/>`);
-R.forEach((r,i)=>{const [x,y]=P(i,1.2);h+=`<text x="${x}" y="${y+4}" font-size="12" font-weight="700" text-anchor="${Math.abs(x)<10?'middle':x>0?'start':'end'}" fill="currentColor">${r.k}</text>`});
-const cols=["#ff5a1f","#f2b134","#9b8f7e"];
-[2,1,0].forEach(j=>h+=`<polygon points="${R.map((r,i)=>P(i,r.p[j]).join(',')).join(' ')}" fill="${cols[j]}" fill-opacity="${j==0?.35:.1}" stroke="${cols[j]}" stroke-width="2.5"/>`);
-rd.innerHTML=h;
+ {k:"점포 증가",s2:"2년 점포 증가율",h:"디저트·카페 점포 2년 증가",s:"중간값 -1.6%",v:["+25%","+2%","+50%"],p:[.97,.69,1.0]},
+ {k:"20~30대 유동",s2:"2년 유동 증가율",h:"20~30대 유동인구 2년 증가",s:"중간값 -4.2%",v:["+14%","+47%","+23%"],p:[.88,.99,.95]},
+ {k:"경쟁 공백",s2:"제과점 비중 ↓유리",h:"제과점 비중 (낮을수록 유리)",s:"중간값 4.1%",v:["3.4%","1.7%","3.4%"],p:[.60,.88,.63]},
+ {k:"주말·저녁 매출",s2:"비중 변화",h:"주말·저녁 매출 비중 변화",s:"중간값 -0.1%p",v:["+5.7%p","+6.0%p","+10.6%p"],p:[.88,.88,.96]},
+ {k:"과열도 안전",s2:"매출 증가 완만↑",h:"매출 증가 (완만할수록 유리)",s:"중간값 -1.5%",v:["+1%","-31% (하락)","+1%"],p:[.77,.49,.76]},
+ {k:"프랜차이즈 낮음",s2:"프랜차이즈 비중 ↓유리",h:"프랜차이즈 비중 (낮을수록 유리)",s:"중간값 21.8%",v:["5%","3%","17%"],p:[.95,.98,.62]}];
+const CN=["문래예술촌","한강로동 땡땡거리","충무로 영화인의거리"],cols=["#ff5a1f","#f2b134","#7d7264"],RAD=210;
+const ang=i=>-Math.PI/2+i*2*Math.PI/6,PT=(i,v)=>[Math.cos(ang(i))*v*RAD,Math.sin(ang(i))*v*RAD];
+const poly=v=>R.map((_,i)=>PT(i,v).join(',')).join(' ');
+const rd=document.getElementById('radar');
+let base=`<defs><radialGradient id="gz"><stop offset="75%" stop-color="#1f7a4d" stop-opacity=".0"/><stop offset="75%" stop-color="#1f7a4d" stop-opacity=".22"/><stop offset="100%" stop-color="#1f7a4d" stop-opacity=".22"/></radialGradient></defs>`;
+base+=`<polygon points="${poly(1)}" fill="#1f7a4d" fill-opacity=".10"/><polygon points="${poly(.75)}" fill="var(--bg)" fill-opacity=".9"/>`;
+base+=`<polygon points="${poly(.75)}" fill="none" stroke="#1f7a4d" stroke-width="1.5" stroke-opacity=".6"/>`;
+[.25,.5,.75,1].forEach(l=>base+=`<polygon points="${poly(l)}" fill="none" stroke="currentColor" stroke-opacity="${l==.5?.7:.22}" ${l==.5?'stroke-dasharray="6 5" stroke-width="2"':''}/>`);
+R.forEach((_,i)=>{const [x,y]=PT(i,1);base+=`<line x1="0" y1="0" x2="${x}" y2="${y}" stroke="currentColor" stroke-opacity=".2"/>`});
+[[.25,"불리",.6,"currentColor"],[.5,"중간",.8,"currentColor"],[.75,"상위 25%",1,"#1f7a4d"],[1,"최상위 ▲ 유리",1,"#1f7a4d"]].forEach(([l,t,o,c])=>{const a=-Math.PI/3,x=Math.cos(a)*l*RAD,y=Math.sin(a)*l*RAD;base+=`<text x="${x+4}" y="${y}" font-size="11" font-weight="700" fill="${c}" opacity="${o}" stroke="var(--bg)" stroke-width="3" paint-order="stroke">${t}</text>`});
+R.forEach((r,i)=>{const [x,y]=PT(i,1.17),a=Math.abs(x)<10?'middle':x>0?'start':'end';base+=`<text x="${x}" y="${y-2}" font-size="15" font-weight="800" text-anchor="${a}" fill="currentColor">${r.k}</text><text x="${x}" y="${y+14}" font-size="11" text-anchor="${a}" fill="currentColor" opacity=".65">${r.s2}</text>`});
+let layers='';
+[0,1,2].forEach(j=>{layers+=`<g class="lyr" data-j="${j}"><polygon class="pg" points="${R.map((r,i)=>PT(i,r.p[j]).join(',')).join(' ')}" fill="${cols[j]}" fill-opacity=".28" stroke="${cols[j]}" stroke-width="3.5" stroke-linejoin="round"/>`;
+ R.forEach((r,i)=>{const [x,y]=PT(i,r.p[j]);layers+=`<circle cx="${x}" cy="${y}" r="6.5" fill="${cols[j]}" stroke="var(--bg)" stroke-width="2"/><text class="vt" x="${x}" y="${y-12}" font-size="12" font-weight="800" text-anchor="middle" fill="currentColor" stroke="var(--bg)" stroke-width="3" paint-order="stroke">${r.v[j].replace(' (하락)','')}</text>`});
+ layers+=`</g>`});
+rd.innerHTML=base+layers;
+const inf=document.getElementById('rinfo');
+function show(k){
+ document.querySelectorAll('#seg button').forEach(b=>b.classList.toggle('on',b.dataset.k==k));
+ document.querySelectorAll('.lyr').forEach(g=>{const j=g.dataset.j,on=k=='all'||k==j;g.style.opacity=on?1:.0;g.classList.toggle('dim',!on);g.querySelector('.pg').setAttribute('fill-opacity',k=='all'?(j==0?.34:.12):.32);g.querySelectorAll('.vt').forEach(t=>t.style.display=(k=='all')?(j==0?'':'none'):'')});
+ if(k=='all'){inf.innerHTML=CN.map((n,j)=>{const g=R.filter(r=>r.p[j]>=.75).length;return `<div class="chipr"><i style="background:${cols[j]}"></i><b>${n}</b><span>유리 구간(상위 25%) 지표 <b>${g} / 6</b></span></div>`}).join('')+`<p class="mut">버튼을 눌러 상권별로 크게 볼 수 있습니다. 숫자는 실측값이고, 문래는 전체 보기에서 값을 표시합니다.</p>`;}
+ else{const j=+k,g=R.filter(r=>r.p[j]>=.75),w=R.filter(r=>r.p[j]<.6);
+  inf.innerHTML=`<h3 style="color:${cols[j]}">${CN[j]}</h3><p style="font-size:34px;font-weight:900;line-height:1;margin:6px 0">${g.length}<small style="font-size:16px"> / 6</small></p><p class="mut">지표가 유리 구간(상위 25%)에 들어갑니다.</p><p><span class="hit">강점</span> ${g.map(r=>r.k+' '+r.v[j].replace(' (하락)','')).join(' · ')}</p><p><span class="miss">약점</span> ${w.length?w.map(r=>r.k+' '+r.v[j]).join(' · '):'없음 (모두 중간 이상)'}</p>`}}
+document.querySelectorAll('#seg button').forEach(b=>b.onclick=()=>show(b.dataset.k));
+show('all');
+document.getElementById('vals').innerHTML='<tr><th>지표</th>'+CN.map(n=>`<th>${n}</th>`).join('')+'</tr>'+R.map(r=>`<tr><td>${r.h}<br><span class="mut">${r.s}</span></td>${r.v.map(v=>`<td>${v}</td>`).join('')}</tr>`).join('');
+
 // reveal
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const t=e.target;t.classList.add('in');
  t.querySelectorAll('[data-w]').forEach(b=>b.style.width=b.dataset.w+'%');
