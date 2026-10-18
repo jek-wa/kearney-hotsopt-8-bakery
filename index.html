@@ -104,11 +104,12 @@ footer{padding:40px 0 60px;border-top:1.5px solid var(--line)}
 .lyr{transition:opacity .5s}
 .chipr{display:grid;grid-template-columns:14px 1fr;gap:2px 10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
 .chipr i{width:14px;height:14px;border-radius:50%;grid-row:span 2}.chipr span{font-size:13px;color:var(--mut);grid-column:2}
+.def{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:18px}
 </style>
 </head>
 <body>
 <nav><div class="w"><b>em ponto · REPORT</b>
-<a href="#mission"><em>00</em>미션</a><a href="#result"><em>01</em>상권 선정</a><a href="#verify"><em>02</em>검증</a><a href="#concept"><em>03</em>매장 컨셉</a><a href="#risk"><em>04</em>한계</a></div></nav>
+<a href="#mission"><em>00</em>미션</a><a href="#define"><em>01</em>뜬다 정의</a><a href="#result"><em>02</em>상권 선정</a><a href="#verify"><em>03</em>검증</a><a href="#concept"><em>04</em>매장 컨셉</a><a href="#risk"><em>05</em>한계</a></div></nav>
 
 <header class="hero" id="mission"><div class="w">
 <span class="pill">SEOUL · 에그타르트 전문점 · 3개년 출점</span>
@@ -119,8 +120,26 @@ footer{padding:40px 0 60px;border-top:1.5px solid var(--line)}
 <div class="marq"><div>EM PONTO · 매 정각 갓 구운 에그타르트 · EM PONTO · 매 정각 갓 구운 에그타르트 · EM PONTO · 매 정각 갓 구운 에그타르트 · EM PONTO · 매 정각 갓 구운 에그타르트 · </div></div>
 </header>
 
+<section id="define"><div class="w">
+<span class="num">01 · DEFINE</span>
+<h2>"뜬다"의 정의</h2>
+<p style="font-size:20px;max-width:760px;font-weight:700;line-height:1.5">상권이 뜨는 시점은 <span style="color:var(--acc)">사람과 점포가 먼저 늘고</span>, 소비 패턴이 <span style="color:var(--acc)">막 바뀌기 시작했고</span>, 임대료·대형 프랜차이즈 같은 <span style="color:var(--acc)">비용 신호는 아직 낮은 때</span>입니다. 이 세 조건이 동시에 맞을 때를 진입 적기로 봅니다.</p>
+<div class="def">
+<div class="card rise"><span class="pill">선행 · 이미 강해야 함</span><h3>사람과 점포가 먼저 움직인다</h3>
+<p><b>a</b> 검색·SNS 언급 증가 (대리: 디저트·카페 점포 증가)<br><b>b</b> 20~30대 생활인구 증가율<br><b>c</b> 경쟁공백 (에그타르트 전문점 밀도, 대리: 제과점 비중)</p>
+<p class="mut">왜: 소비층이 모이고 경쟁이 적은 곳이 먼저 뜬다. 상권이 커지기 전부터 보이는 신호.</p></div>
+<div class="card rise"><span class="pill">동행 · 막 전환되어야 함</span><h3>소비 패턴이 바뀌기 시작한다</h3>
+<p><b>d</b> 주말·저녁 시간대 매출 비중 상승</p>
+<p class="mut">왜: 평일 낮 중심 상권에서 목적 방문·체류형 상권으로 바뀌는 순간. 이미 포화된 곳은 제외.</p></div>
+<div class="card rise"><span class="pill">후행 · 아직 낮아야 함</span><h3>비용 신호가 아직 오르지 않았다</h3>
+<p><b>e</b> 임대료 상승률 (대리: 매출 과열도)<br><b>f</b> 대형 프랜차이즈 비중</p>
+<p class="mut">왜: 상권이 뜬 뒤에 따라오는 지표라, 낮을수록 아직 뜨기 전이라는 증거. 높으면 선점 이익이 이미 사라진 곳.</p></div>
+</div>
+<div class="how" style="margin-top:18px"><b>판정 방식.</b> 후보 상권 281곳을 서울 안에서 서로 비교해 지표마다 위치(백분위)를 구하고, 선행·동행·후행을 곱해 <b>진입적기 지수(0~100)</b>를 만듭니다. 세 조건 중 하나라도 약하면 지수가 크게 내려가므로, 한 가지만 좋은 곳은 높은 점수를 받지 못합니다.</div>
+</div></section>
+
 <section id="result"><div class="w">
-<span class="num">01 · RESULT</span>
+<span class="num">02 · RESULT</span>
 <h2>최적 상권 선정 결과</h2>
 <div class="tabs"><a href="#cmp">비교</a><a href="#win">최종 선정</a><a href="#why">핵심 사유</a></div>
 <p class="mut">점수는 인위적인 10점 만점 대신 <b>진입적기 지수(0~100)</b>를 씁니다. 후보 281곳 안에서 각 지표의 상대 위치(백분위)를 구해 선행·동행·후행을 곱해 만든 값이라 만점이 따로 없고, "281곳 중 몇 위"가 핵심입니다.</p>
@@ -142,12 +161,7 @@ footer{padding:40px 0 60px;border-top:1.5px solid var(--line)}
 <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
 <div class="card"><h3>실측값</h3>
 <table id="vals"></table></div>
-<div class="card"><h3>비교 기간을 바꿔도 유지되나</h3>
-<table><tr><th>상권</th><th>1년</th><th>2년</th><th>3년</th></tr>
-<tr><td>문래</td><td>82.6 (1위)</td><td><b>84.5 (1위)</b></td><td>77.3 (3위)</td></tr>
-<tr><td>한강로동 땡땡거리</td><td>79.0 (2위)</td><td>80.9 (2위)</td><td>79.2 (2위)</td></tr>
-<tr><td>충무로</td><td>72.9 (6위)</td><td>80.5 (3위)</td><td>84.6 (1위)</td></tr></table>
-<p class="mut">세 곳은 모든 기간에서 281곳 중 6위 안에 듭니다. 문래는 1·2년 비교에서 1위, 충무로는 3년 비교에서 1위로 격차가 크지 않습니다. 참고로 이미 뜬 성수동카페거리는 25~54위(지수 60~66)입니다.</p></div>
+
 </div>
 
 <h3 id="win" style="margin-top:56px;font-size:26px">최종 선정</h3>
@@ -170,7 +184,7 @@ footer{padding:40px 0 60px;border-top:1.5px solid var(--line)}
 </div></section>
 
 <section id="verify"><div class="w">
-<span class="num">02 · VERIFY</span>
+<span class="num">03 · VERIFY</span>
 <h2>성수가 뜨기 전에 잡을 수 있었나</h2>
 <p style="max-width:700px">두 가지로 확인했습니다. ① 성수가 뜨기 시작하던 2013~2016년의 카페 인허가 데이터로 <b>선행지표 a(카페 점포 증가)</b>를 시험했고, ② 2021년 이후 6지표 전체 판정식을 성수에 적용했습니다. 2021년 이전 매출·유동인구·프랜차이즈 데이터는 API에 없어 6지표 전체를 성수 초기에 적용하는 것은 불가능했습니다.</p>
 <h3 style="margin-top:28px">① 2013~2016년: 선행지표 a만 시험 (카페 인허가 이력)</h3>
@@ -192,7 +206,7 @@ footer{padding:40px 0 60px;border-top:1.5px solid var(--line)}
 </div></section>
 
 <section id="concept"><div class="w">
-<span class="num">03 · CONCEPT</span>
+<span class="num">04 · CONCEPT</span>
 <h2>엠폰투 <span style="color:var(--acc)">em ponto</span></h2>
 <p style="font-size:18px;max-width:640px">포르투갈어로 "정각"이라는 뜻입니다. 매시 정각에 구워 내는 에그타르트로, 기다림을 이벤트로 바꿉니다.</p>
 <div class="clockwrap">
@@ -225,7 +239,7 @@ footer{padding:40px 0 60px;border-top:1.5px solid var(--line)}
 </div></section>
 
 <section id="risk"><div class="w">
-<span class="num">04 · LIMITS</span>
+<span class="num">05 · LIMITS</span>
 <h2>이 결과가 틀릴 수 있는 이유</h2>
 <div class="grid">
 <div class="card"><h3>과거 재검증 결과</h3><p>성수가 뜨기 전(2013~2016) 카페 증가 지표는 성수동1가를 상위 3~13%로 미리 잡았습니다. 그러나 6지표를 합친 판정식은 2021년 이후 데이터에서 예측력이 없었고(순위상관 -0.02~-0.01) 성수동카페거리도 놓쳤습니다. 6지표 합산의 장기 예측력은 입증되지 않았습니다.</p></div>
