@@ -86,17 +86,26 @@ th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left}th{b
 .menu b.p{font:800 30px "Bricolage Grotesque"}
 footer{padding:40px 0 60px;border-top:1.5px solid var(--line)}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rise{opacity:1;transform:none}}
+.pctw{position:relative;height:18px;background:color-mix(in srgb,var(--ink) 9%,transparent);border-radius:9px;flex:1}
+.pctw i{position:absolute;left:0;top:0;height:100%;border-radius:9px;width:0;transition:width 1.3s cubic-bezier(.2,.7,.2,1)}
+.pctw:after{content:"";position:absolute;left:50%;top:-4px;bottom:-4px;border-left:2px dashed var(--ink);opacity:.55}
+.bars div{display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:10px;align-items:center}
+.bars em{font-size:12px;line-height:1.25}.bars em b{display:block;font-size:13px}
+.axis{display:flex;justify-content:space-between;font-size:11px;color:var(--mut);margin:0 160px 0 0}
+.how{background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:14px 18px;font-size:14px;margin:14px 0}
+.how b{color:var(--acc)}
+.det td:first-child{font-weight:700}.hit{color:var(--g);font-weight:700}.miss{color:var(--r);font-weight:700}
 </style>
 </head>
 <body>
 <nav><div class="w"><b>em ponto · REPORT</b>
-<a href="#mission"><em>00</em>미션</a><a href="#result"><em>01</em>상권 선정</a><a href="#concept"><em>02</em>매장 컨셉</a><a href="#risk"><em>03</em>한계</a></div></nav>
+<a href="#mission"><em>00</em>미션</a><a href="#result"><em>01</em>상권 선정</a><a href="#verify"><em>02</em>검증</a><a href="#concept"><em>03</em>매장 컨셉</a><a href="#risk"><em>04</em>한계</a></div></nav>
 
 <header class="hero" id="mission"><div class="w">
 <span class="pill">SEOUL · 에그타르트 전문점 · 3개년 출점</span>
 <h1>정각에<br>들어갈 <span>상권</span></h1>
-<p style="max-width:560px;font-size:18px">서울시 열린데이터 광장 실측으로 후보 281곳을 판정했습니다. 선행 지표는 강하고, 동행 지표는 막 돌아섰고, 후행 지표는 아직 낮은 곳을 찾았습니다.</p>
-<div class="mission"><small>YOUR MISSION</small><b>"경쟁사보다 먼저, 뜨기 직전의 서울 상권에 엠폰투 1호점을 낸다."</b><span class="mut" style="color:#f6efe3aa">최종 선정: 문래예술촌(문래창작촌) · 판정식 점수 10.0 / 10 (2년 비교 기준)</span></div>
+<p style="max-width:560px;font-size:18px">서울시 열린데이터 광장 실측으로 후보 281곳을 서로 비교했습니다. 선행 지표는 강하고, 동행 지표는 막 돌아섰고, 후행 지표는 아직 낮은 곳을 찾았습니다.</p>
+<div class="mission"><small>YOUR MISSION</small><b>"경쟁사보다 먼저, 뜨기 직전의 서울 상권에 엠폰투 1호점을 낸다."</b><span class="mut" style="color:#f6efe3aa">최종 선정: 문래예술촌(문래창작촌) · 진입적기 지수 84.5 · 후보 281곳 중 1위 (2년 비교 기준)</span></div>
 </div>
 <div class="marq"><div>EM PONTO · 매 정각 갓 구운 에그타르트 · EM PONTO · 매 정각 갓 구운 에그타르트 · EM PONTO · 매 정각 갓 구운 에그타르트 · EM PONTO · 매 정각 갓 구운 에그타르트 · </div></div>
 </header>
@@ -105,47 +114,71 @@ footer{padding:40px 0 60px;border-top:1.5px solid var(--line)}
 <span class="num">01 · RESULT</span>
 <h2>최적 상권 선정 결과</h2>
 <div class="tabs"><a href="#cmp">비교</a><a href="#win">최종 선정</a><a href="#why">핵심 사유</a></div>
+<p class="mut">점수는 인위적인 10점 만점 대신 <b>진입적기 지수(0~100)</b>를 씁니다. 후보 281곳 안에서 각 지표의 상대 위치(백분위)를 구해 선행·동행·후행을 곱해 만든 값이라 만점이 따로 없고, "281곳 중 몇 위"가 핵심입니다.</p>
 <div class="cands">
-<div class="card rise"><span class="pill">후보 1</span><h3>문래예술촌(문래창작촌)</h3><div class="s" data-n="10.0">0</div><span class="mut">영등포구 · 골목상권 · 판정식 점수</span></div>
-<div class="card rise"><span class="pill">후보 2</span><h3>충무로 영화인의거리</h3><div class="s" data-n="8.94">0</div><span class="mut">중구 · 발달상권 · 판정식 점수</span></div>
-<div class="card rise"><span class="pill">후보 3</span><h3>서교동(홍대)</h3><div class="s" data-n="7.58">0</div><span class="mut">마포구 · 발달상권 · 2년 비교 (3년 비교 8.92)</span></div>
+<div class="card rise"><span class="pill">후보 1 · 281곳 중 1위</span><h3>문래예술촌(문래창작촌)</h3><div class="s" data-n="84.5">0</div><span class="mut">영등포구 · 골목상권 · 진입적기 지수 (2년 비교)</span></div>
+<div class="card rise"><span class="pill">후보 2 · 281곳 중 2위</span><h3>한강로동 땡땡거리(은행나무길)</h3><div class="s" data-n="80.9">0</div><span class="mut">용산구 · 골목상권 · 진입적기 지수 (2년 비교)</span></div>
+<div class="card rise"><span class="pill">후보 3 · 281곳 중 3위</span><h3>충무로 영화인의거리</h3><div class="s" data-n="80.5">0</div><span class="mut">중구 · 발달상권 · 진입적기 지수 (2년 비교)</span></div>
 </div>
 
 <h3 id="cmp" style="margin-top:56px;font-size:26px">지표별 데이터 비교</h3>
-<p class="mut">막대 길이는 판정식 환산 점수(0~1)이고 숫자는 실측값입니다. 비교 기간은 2024Q2 → 2026Q2. 선행(a·b·c) / 동행(d) / 후행(e·f).</p>
-<div class="leg"><span><i class="c1"></i>문래</span><span><i class="c2"></i>충무로 영화인의거리</span><span><i class="c3"></i>서교동(홍대)</span></div>
+<div class="how"><b>이렇게 읽으세요.</b> 막대는 <b>후보 281곳 중 얼마나 유리한 위치인가</b>를 뜻합니다. 막대가 길수록 진입에 유리하고, 점선(가운데)은 서울 후보의 중간 수준입니다. 점선을 넘으면 중간보다 좋은 것이고 끝에 가까울수록 상위권입니다. 오른쪽 숫자는 실제 측정값과 "상위 몇 %"입니다. 경쟁공백과 프랜차이즈 비중은 값이 낮을수록 유리해서 막대를 뒤집어 그렸습니다.</div>
+<div class="leg"><span><i class="c1"></i>문래</span><span><i class="c2"></i>한강로동 땡땡거리</span><span><i class="c3"></i>충무로 영화인의거리</span></div>
+<div class="axis"><span>← 불리 (하위)</span><span>중간</span><span>유리 (상위) →</span></div>
 <div id="rows"></div>
 <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
-<div class="card"><h3>레이더: 6지표 균형</h3><svg id="radar" viewBox="-130 -130 260 260" style="width:100%;max-width:340px;display:block;margin:auto"></svg></div>
-<div class="card"><h3>비교 기간별 점수</h3>
-<table><tr><th>상권</th><th>1년</th><th>2년</th><th>3년</th><th>평균</th></tr>
-<tr><td>문래</td><td>8.68</td><td><b>10.0</b></td><td>7.93</td><td>8.87</td></tr>
-<tr><td>충무로</td><td>8.73</td><td>8.94</td><td>8.94</td><td>8.87</td></tr>
-<tr><td>홍대</td><td>6.93</td><td>7.58</td><td>8.92</td><td>7.81</td></tr></table>
-<p class="mut">합격선은 사용자 지시로 9.5에서 8.5로 조정했습니다. 문래의 10.0은 2년 비교 값이며 다른 기간에서는 충무로와 사실상 동률입니다.</p></div>
+<div class="card"><h3>6지표 균형 (레이더)</h3><svg id="radar" viewBox="-175 -150 350 300" style="width:100%;max-width:420px;display:block;margin:auto"></svg><p class="mut" style="margin-bottom:0">바깥쪽일수록 유리합니다. 바깥 테두리가 후보 281곳 중 최상위, 점선 육각형이 중간 수준입니다.</p></div>
+<div class="card"><h3>비교 기간을 바꿔도 유지되나</h3>
+<table><tr><th>상권</th><th>1년</th><th>2년</th><th>3년</th></tr>
+<tr><td>문래</td><td>82.6 (1위)</td><td><b>84.5 (1위)</b></td><td>77.3 (3위)</td></tr>
+<tr><td>한강로동 땡땡거리</td><td>79.0 (2위)</td><td>80.9 (2위)</td><td>79.2 (2위)</td></tr>
+<tr><td>충무로</td><td>72.9 (6위)</td><td>80.5 (3위)</td><td>84.6 (1위)</td></tr></table>
+<p class="mut">세 곳은 모든 기간에서 281곳 중 6위 안에 듭니다. 문래는 1·2년 비교에서 1위, 충무로는 3년 비교에서 1위로 격차가 크지 않습니다. 참고로 이미 뜬 성수동카페거리는 25~54위(지수 60~66)입니다.</p></div>
 </div>
 
 <h3 id="win" style="margin-top:56px;font-size:26px">최종 선정</h3>
 <div class="stage" id="stage">
 <span class="pill" style="border-color:#f6efe366">FINAL PICK</span>
-<div class="t"><span class="chip out">충무로 영화인의거리 8.94</span><span class="chip win">문래예술촌 10.0</span><span class="chip out">서교동(홍대) 7.58</span></div>
+<div class="t"><span class="chip out">한강로동 땡땡거리 80.9</span><span class="chip win">문래예술촌 84.5</span><span class="chip out">충무로 영화인의거리 80.5</span></div>
 <div class="ring"><svg viewBox="0 0 200 200" width="210" height="210"><circle class="bg" cx="100" cy="100" r="90"/><circle class="fg" id="fg" cx="100" cy="100" r="90"/></svg><b id="cnt">0.0</b></div>
 <h3>문래예술촌(문래창작촌)</h3>
-<div style="color:#f6efe3aa">선행 강함 · 동행 전환 시작 · 후행 낮음</div>
+<div style="color:#f6efe3aa">진입적기 지수 · 후보 281곳 중 1위</div>
 <span class="spark" style="left:30%;top:60%;--x:-60px;--y:-90px"></span><span class="spark" style="left:70%;top:55%;--x:70px;--y:-80px;animation-delay:.6s"></span><span class="spark" style="left:50%;top:40%;--x:0;--y:-110px;animation-delay:1.2s"></span><span class="spark" style="left:20%;top:30%;--x:-80px;--y:-40px;animation-delay:1.8s"></span><span class="spark" style="left:82%;top:35%;--x:80px;--y:-50px;animation-delay:2.2s"></span>
 </div>
 
 <h3 id="why" style="margin-top:56px;font-size:26px">핵심 사유 요약</h3>
 <div class="why">
-<div class="rise"><b>선행: 사람과 점포가 같이 늘고 있다.</b> 디저트·카페 점포 43→74곳(+25%, 2021Q2→2026Q2 매년 증가), 20~30대 유동인구 +14%. 경쟁 공백은 제과점 비중 3.4%로 낮다.</div>
-<div class="rise"><b>동행: 주말·저녁 소비가 막 올라오기 시작했다.</b> 디저트·카페 매출의 주말+저녁 비중이 +5.7%p 상승했지만 아직 포화 구간은 아니다.</div>
-<div class="rise"><b>후행: 아직 과열 전이다.</b> 프랜차이즈 비중 5%(2021년 7%에서 감소), 매출 증가 +1%로 과열 신호가 없다. 임대료는 직접 데이터가 없어 현장 확인이 필요하다.</div>
-<div class="rise"><b>비교우위: 3곳 중 6개 지표를 모두 충족한 유일한 곳이다.</b> 충무로는 프랜차이즈 17%, 홍대는 이미 성숙해 매출 +33%로 후행이 먼저 올라와 있다.</div>
+<div class="rise"><b>선행: 점포와 사람이 서울 중간보다 훨씬 빠르게 늘고 있다.</b> 디저트·카페 점포 +25%(후보 중간값 -1.6%, 상위 3%), 20~30대 유동인구 +14%(중간값 -4.2%, 상위 12%). 2021Q2→2026Q2 점포는 43→74곳으로 매년 늘었다.</div>
+<div class="rise"><b>동행: 주말·저녁 소비가 막 올라오기 시작했다.</b> 디저트·카페 매출의 주말+저녁 비중이 +5.7%p(중간값 -0.1%p, 상위 12%) 상승했지만 아직 포화 수준은 아니다.</div>
+<div class="rise"><b>후행: 과열 전이다.</b> 프랜차이즈 비중 5%(중간값 21.8%, 상위 5%), 매출 증가 +1%. 임대료는 직접 데이터가 없어 현장 확인이 필요하다.</div>
+<div class="rise"><b>비교우위: 선행·동행·후행 균형이 가장 좋다.</b> 한강로동은 유동인구(+47%)는 최고지만 디저트·카페 매출이 -31%로 줄었고, 충무로는 프랜차이즈 비중이 17%로 문래보다 높다.</div>
 </div>
 </div></section>
 
+<section id="verify"><div class="w">
+<span class="num">02 · VERIFY</span>
+<h2>성수가 뜨기 전에 잡을 수 있었나</h2>
+<p style="max-width:700px">두 가지로 확인했습니다. ① 성수가 뜨기 시작하던 2013~2016년의 카페 인허가 데이터로 <b>선행지표 a(카페 점포 증가)</b>를 시험했고, ② 2021년 이후 6지표 전체 판정식을 성수에 적용했습니다. 2021년 이전 매출·유동인구·프랜차이즈 데이터는 API에 없어 6지표 전체를 성수 초기에 적용하는 것은 불가능했습니다.</p>
+<h3 style="margin-top:28px">① 2013~2016년: 선행지표 a만 시험 (카페 인허가 이력)</h3>
+<p class="mut">서울 법정동별로 "직전 3년간 영업 중인 카페 수 증가율"을 구해 순위를 매기고 이후 성장과 비교했습니다 (서울시 휴게음식점 인허가 데이터 중 커피숍, 서울 약 270~300개 동).</p>
+<table class="det"><tr><th>판정 시점</th><th>성수동1가: 직전 3년 증가율 / 서울 동 순위</th><th>이후(~2019) 증가율 / 순위</th><th>성수동2가 순위</th></tr>
+<tr><td>2013년</td><td class="hit">+79% / 18위 (상위 7%)</td><td>+202% / 5위</td><td>59위</td></tr>
+<tr><td>2014년</td><td class="hit">+81% / 8위 (상위 3%)</td><td>+142% / 7위</td><td>111위</td></tr>
+<tr><td>2015년</td><td class="hit">+53% / 30위 (상위 10%)</td><td>+128% / 7위</td><td>87위</td></tr>
+<tr><td>2016년</td><td class="hit">+60% / 38위 (상위 13%)</td><td>+89% / 9위</td><td>124위</td></tr></table>
+<div class="grid">
+<div class="card"><h3 class="hit">맞은 점</h3><p>성수동1가는 2013~2016년 모든 시점에서 상위 13% 안으로 포착됐고, 실제로 이후 서울 5~9위 성장했습니다. 임대료 갈등이 사회 이슈가 된 2017~2018년보다 <b>3~4년 앞선 신호</b>입니다.</p></div>
+<div class="card"><h3 class="miss">틀린 점</h3><p>성수동2가는 같은 기간 중위권(59~124위)이라 놓쳤습니다. 서울 전체로는 초기 증가율과 이후 증가율의 순위상관이 0.11~0.27로 약한 양의 관계입니다. 상위 10% 동의 이후 성장 중앙값은 전체보다 높았습니다(2015년 판정: 51% vs 33%).</p></div>
+</div>
+<h3 style="margin-top:34px">② 2021년 이후: 6지표 전체 판정식</h3>
+<table class="det"><tr><th>판정 시점</th><th>성수동카페거리 순위</th><th>이후 매출·유동 변화</th><th>전체 예측력</th></tr>
+<tr><td>2023Q2 (2년 비교)</td><td class="miss">150 / 315위</td><td>3년간 매출 +127%, 유동 +41%</td><td>상위 10%가 평균을 넘은 비율 52%, 순위상관 -0.02</td></tr>
+<tr><td>2022Q2 (1년 비교)</td><td class="miss">137 / 303위</td><td>4년간 매출 +75%, 유동 +64%</td><td>비율 52%, 순위상관 -0.01</td></tr></table>
+<p class="note"><b>결론: 절반만 검증됐습니다.</b> 선행지표 a(카페 점포 증가)는 성수를 미리 잡았지만, 6지표를 합친 판정식은 2021년 이후 데이터에서 예측력이 없었습니다. 이 보고서의 지수는 "지금 조건이 좋은 곳"을 고르는 도구이며, 합산 방식의 예측력은 입증되지 않았습니다. 그래서 선정 근거를 점수 하나가 아니라 지표별 데이터로 함께 제시했습니다.</p>
+</div></section>
+
 <section id="concept"><div class="w">
-<span class="num">02 · CONCEPT</span>
+<span class="num">03 · CONCEPT</span>
 <h2>엠폰투 <span style="color:var(--acc)">em ponto</span></h2>
 <p style="font-size:18px;max-width:640px">포르투갈어로 "정각"이라는 뜻입니다. 매시 정각에 구워 내는 에그타르트로, 기다림을 이벤트로 바꿉니다.</p>
 <div class="clockwrap">
@@ -178,44 +211,42 @@ footer{padding:40px 0 60px;border-top:1.5px solid var(--line)}
 </div></section>
 
 <section id="risk"><div class="w">
-<span class="num">03 · LIMITS</span>
+<span class="num">04 · LIMITS</span>
 <h2>이 결과가 틀릴 수 있는 이유</h2>
 <div class="grid">
-<div class="card"><h3>과거 검증 결과</h3><p>같은 판정식을 2023Q2에 적용해 이후 3년과 비교하자 <b>예측력이 거의 없었습니다</b>(상위 10%가 평균을 넘은 비율 55%, 순위상관 −0.01). 성수동카페거리는 놓쳤습니다.</p></div>
+<div class="card"><h3>과거 재검증 결과</h3><p>성수가 뜨기 전(2013~2016) 카페 증가 지표는 성수동1가를 상위 3~13%로 미리 잡았습니다. 그러나 6지표를 합친 판정식은 2021년 이후 데이터에서 예측력이 없었고(순위상관 -0.02~-0.01) 성수동카페거리도 놓쳤습니다. 6지표 합산의 장기 예측력은 입증되지 않았습니다.</p></div>
 <div class="card"><h3>대리지표</h3><p>검색/SNS, 임대료, 에그타르트 단독 업종은 이 API에 없어 각각 점포 증가율, 매출 과열 여부, 제과점 비중으로 대체했습니다.</p></div>
-<div class="card"><h3>다음 단계</h3><p>한국부동산원 임대료와 네이버 데이터랩 검색량을 붙여 재검증하고, 문래·충무로를 현장 실사한 뒤 소형으로 1호점을 시작하세요.</p></div>
+<div class="card"><h3>다음 단계</h3><p>한국부동산원 임대료와 네이버 데이터랩 검색량을 붙여 재검증하고, 문래·한강로동·충무로를 현장 실사한 뒤 소형으로 1호점을 시작하세요.</p></div>
 </div>
 </div></section>
 
-<footer><div class="w mut">데이터: 서울 열린데이터광장 상권분석서비스(추정매출·추정유동인구·점포), 2024Q2 대비 2026Q2. 투자·계약 자문이 아닙니다.</div></footer>
+<footer><div class="w mut">데이터: 서울 열린데이터광장 상권분석서비스(추정매출·추정유동인구·점포), 2024Q2 대비 2026Q2. 성수 사전 검증은 서울시 휴게음식점 인허가 데이터(커피숍). 투자·계약 자문이 아닙니다.</div></footer>
 
 <script>
-const names=["문래","충무로 영화인의거리","서교동(홍대)"];
 const R=[
- {k:"a",t:"디저트·카페 점포 증가",s:"선행 · 2년",v:["+25%","+50%","+2%"],n:[1,1,.17]},
- {k:"b",t:"20~30대 유동인구 증가",s:"선행 · 2년",v:["+14%","+23%","+4%"],n:[1,1,.58]},
- {k:"c",t:"경쟁공백 (제과점 비중)",s:"선행 · 낮을수록 좋음",v:["3.4%","3.4%","4.3%"],n:[1,1,1]},
- {k:"d",t:"주말·저녁 매출 비중 변화",s:"동행",v:["+5.7%p","+10.6%p","+3.8%p"],n:[1,1,.96]},
- {k:"e",t:"과열도 (매출 증가, 임대료 대리)",s:"후행 · 건강 밴드가 좋음",v:["+1%","+1%","+33%"],n:[1,1,.84]},
- {k:"f",t:"프랜차이즈 비중",s:"후행 · 낮을수록 좋음",v:["5%","17%","11%"],n:[1,.51,.93]}];
+ {k:"점포 증가",t:"디저트·카페 점포 증가",s:"선행 · 2년 · 중간값 -1.6%",v:["+25%","+2%","+50%"],p:[.97,.69,1.0]},
+ {k:"20~30대 유동",t:"20~30대 유동인구 증가",s:"선행 · 2년 · 중간값 -4.2%",v:["+14%","+47%","+23%"],p:[.88,.99,.95]},
+ {k:"경쟁 공백",t:"경쟁공백 (제과점 비중)",s:"선행 · 낮을수록 유리 · 중간값 4.1%",v:["3.4%","1.7%","3.4%"],p:[.60,.88,.63]},
+ {k:"주말·저녁 매출",t:"주말·저녁 매출 비중 변화",s:"동행 · 중간값 -0.1%p",v:["+5.7%p","+6.0%p","+10.6%p"],p:[.88,.88,.96]},
+ {k:"과열도 안전",t:"과열도 (매출 증가, 임대료 대리)",s:"후행 · 완만한 성장이 유리 · 중간값 -1.5%",v:["+1%","-31% (하락 주의)","+1%"],p:[.77,.49,.76]},
+ {k:"프랜차이즈 낮음",t:"프랜차이즈 비중",s:"후행 · 낮을수록 유리 · 중간값 21.8%",v:["5%","3%","17%"],p:[.95,.98,.62]}];
 const rows=document.getElementById('rows');
-rows.innerHTML=R.map(r=>`<div class="row rise"><div class="lb"><b>${r.k}. ${r.t}</b><span>${r.s}</span></div><div class="bars">${r.n.map((n,i)=>`<div><i class="c${i+1}" data-w="${Math.max(n*100,4)}"></i><em>${r.v[i]}</em></div>`).join('')}</div></div>`).join('');
-// radar
+rows.innerHTML=R.map(r=>`<div class="row rise"><div class="lb"><b>${r.t}</b><span>${r.s}</span></div><div class="bars">${r.p.map((p,i)=>`<div><span class="pctw"><i class="c${i+1}" data-w="${p*100}"></i></span><em><b>${r.v[i]}</b>상위 ${Math.max(1,Math.round((1-p)*100))}%</em></div>`).join('')}</div></div>`).join('');
 const rd=document.getElementById('radar'),ang=i=>-Math.PI/2+i*2*Math.PI/6,P=(i,v)=>[Math.cos(ang(i))*v*100,Math.sin(ang(i))*v*100];
-let h='';[.33,.66,1].forEach(l=>h+=`<polygon points="${R.map((_,i)=>P(i,l).join(',')).join(' ')}" fill="none" stroke="currentColor" opacity=".18"/>`);
-R.forEach((r,i)=>{const [x,y]=P(i,1.18);h+=`<text x="${x}" y="${y}" font-size="11" text-anchor="middle" fill="currentColor">${r.k}</text>`});
+let h='';[.5,1].forEach((l,q)=>h+=`<polygon points="${R.map((_,i)=>P(i,l).join(',')).join(' ')}" fill="none" stroke="currentColor" opacity="${q?'.25':'.45'}" ${q?'':'stroke-dasharray="4 4"'}/>`);
+R.forEach((r,i)=>{const [x,y]=P(i,1.2);h+=`<text x="${x}" y="${y+4}" font-size="12" font-weight="700" text-anchor="${Math.abs(x)<10?'middle':x>0?'start':'end'}" fill="currentColor">${r.k}</text>`});
 const cols=["#ff5a1f","#f2b134","#9b8f7e"];
-[2,1,0].forEach(j=>h+=`<polygon points="${R.map((r,i)=>P(i,r.n[j]).join(',')).join(' ')}" fill="${cols[j]}" fill-opacity="${j==0?.35:.12}" stroke="${cols[j]}" stroke-width="2.5"/>`);
+[2,1,0].forEach(j=>h+=`<polygon points="${R.map((r,i)=>P(i,r.p[j]).join(',')).join(' ')}" fill="${cols[j]}" fill-opacity="${j==0?.35:.1}" stroke="${cols[j]}" stroke-width="2.5"/>`);
 rd.innerHTML=h;
 // reveal
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const t=e.target;t.classList.add('in');
- t.querySelectorAll('[data-w]').forEach(b=>b.style.width=b.dataset.w*.62+'%');
+ t.querySelectorAll('[data-w]').forEach(b=>b.style.width=b.dataset.w+'%');
  const s=t.querySelector('.s[data-n]');if(s)count(s,+s.dataset.n);io.unobserve(t)}),{threshold:.25});
 document.querySelectorAll('.rise').forEach(e=>io.observe(e));
-function count(el,to,fn){const t0=performance.now();(function f(t){const p=Math.min(1,(t-t0)/1600);el.textContent=(to*(1-Math.pow(1-p,3))).toFixed(to%1?2:1);if(p<1)requestAnimationFrame(f);else el.textContent=to%1?to.toFixed(2):to.toFixed(1)})(t0)}
+function count(el,to,fn){const t0=performance.now();(function f(t){const p=Math.min(1,(t-t0)/1600);el.textContent=(to*(1-Math.pow(1-p,3))).toFixed(1);if(p<1)requestAnimationFrame(f);else el.textContent=to.toFixed(1)})(t0)}
 // stage
 const st=document.getElementById('stage');
-new IntersectionObserver((es,o)=>{if(es[0].isIntersecting){st.classList.add('go');document.getElementById('fg').style.strokeDashoffset=565*(1-1);count(document.getElementById('cnt'),10);o.disconnect()}},{threshold:.5}).observe(st);
+new IntersectionObserver((es,o)=>{if(es[0].isIntersecting){st.classList.add('go');document.getElementById('fg').style.strokeDashoffset=565*(1-.845);count(document.getElementById('cnt'),84.5);o.disconnect()}},{threshold:.5}).observe(st);
 // clock
 const tk=document.getElementById('ticks');let tt='';for(let i=0;i<12;i++){tt+=`<line y1="-90" y2="-80" stroke="currentColor" stroke-width="3" transform="rotate(${i*30})"/>`}tk.innerHTML=tt;
 function tick(){const d=new Date(),m=d.getMinutes(),s=d.getSeconds();
